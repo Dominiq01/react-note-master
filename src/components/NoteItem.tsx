@@ -11,7 +11,7 @@ interface NoteItemProps {
 const NoteItem: React.FC<NoteItemProps> = ({ id, title, content, color, onDeleteNote }) => {
   return (
     <li className="note-item" style={{ backgroundColor: color }}>
-      <button onClick={() => onDeleteNote(id)} className="note-item__delete">❌</button>
+      <button onClick={() => onDeleteNote(id)} className="note-item__delete">&times;</button>
       <h3>{title}</h3>
       <p>{content}</p>
     </li>

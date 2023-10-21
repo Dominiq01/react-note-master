@@ -7,8 +7,10 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ setIsFormVisible }) => {
   return (
     <div className="header">
-      <h2>Note Master</h2>
-      <p>- create your notes</p>
+      <div className="header__title">
+        <h2>Note Master</h2>
+        <p>- create your personal notes</p>
+      </div>
       <button onClick={() => setIsFormVisible(true)} className="button">
         + Add note
       </button>
