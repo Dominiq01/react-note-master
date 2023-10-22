@@ -1,7 +1,6 @@
 import React from "react";
 import NoteItem from "./NoteItem";
 import NoteForm from "./NoteForm";
-import Draggable from "react-draggable";
 
 export interface NoteItem {
   id: number;
