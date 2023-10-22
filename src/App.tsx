@@ -4,23 +4,29 @@ import NoteList from "./components/NoteList";
 import { useEffect, useState } from "react";
 import { NoteItem } from "./components/NoteList";
 
-
 function App() {
   const [notes, setNotes] = useState<Array<NoteItem>>([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  
+  const [searchedValue, setSearchedValue] = useState("");
+  let searchedNotes;
+
+  searchedNotes = [...notes].filter(
+    (note) =>
+      note.content.includes(searchedValue) || note.title.includes(searchedValue)
+  );
+
   useEffect(() => {
-    const storedData = localStorage.getItem('notes');
-    
-    if(!storedData) return
-    const parsedData = JSON.parse(storedData)
-    if(parsedData.length <= 0) return
+    const storedData = localStorage.getItem("notes");
+
+    if (!storedData) return;
+    const parsedData = JSON.parse(storedData);
+    if (parsedData.length <= 0) return;
     setNotes(parsedData);
   }, []);
-  
+
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes])
+  }, [notes]);
 
   const addNoteHandler = (note: NoteItem) => {
     setNotes((prevNotes) => [note, ...prevNotes]);
@@ -30,17 +36,24 @@ function App() {
     setNotes((prevNotes) => [...prevNotes].filter((note) => note.id !== id));
   };
 
+  const searchNoteHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchedValue(e.target.value);
+  };
+
   return (
     <div className="app">
-      <Header setIsFormVisible={setIsFormVisible} />
+      <Header
+        onSearchNote={searchNoteHandler}
+        setIsFormVisible={setIsFormVisible}
+      />
       <NoteList
         onAddNote={addNoteHandler}
         onDeleteNote={deleteNoteHandler}
         onCancel={setIsFormVisible}
         isFormVisible={isFormVisible}
-        notes={notes ?? []}
+        notes={searchedValue.trim() === "" ? notes : searchedNotes}
       />
-      <Footer notesCount={notes ? notes.length : 0}/>
+      <Footer notesCount={notes ? notes.length : 0} />
     </div>
   );
 }

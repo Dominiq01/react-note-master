@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import Button from "./Button";
 import { NoteItem } from "./NoteList";
-import Select from "react-select";
-import { StylesConfig } from "react-select";
+import Select, { StylesConfig } from "react-select";
 import ColourOption from "react-select";
-
 
 interface NoteFormProps {
   onCancel: (isVisible: boolean) => void;
@@ -26,6 +24,7 @@ const colors: readonly ColorOption[] = [
 const NoteForm: React.FC<NoteFormProps> = ({ onCancel, onAddNote }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isInvalid, setIsInvalid] = useState(false);
   const [color, setColor] = useState<ColorOption>({ label: null, value: null });
 
   const customTheme = (theme: any) => {
@@ -62,12 +61,12 @@ const NoteForm: React.FC<NoteFormProps> = ({ onCancel, onAddNote }) => {
         },
       };
     },
-    menu: (styles) => ({...styles, top: "80%"})
+    menu: (styles) => ({ ...styles, top: "80%" }),
   };
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!title || !content || !color.value) return;
+    if (!title || !content || !color.value) return setIsInvalid(true);
     console.log({ title, content, color });
     onAddNote({
       id: Date.now(),
@@ -82,20 +81,27 @@ const NoteForm: React.FC<NoteFormProps> = ({ onCancel, onAddNote }) => {
     onCancel(false);
   };
 
-
   return (
     <form onSubmit={submitHandler} className="note-form">
       <label>Title:</label>
       <input
+        placeholder="Title..."
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          setIsInvalid(false);
+        }}
         className="note-form__title"
         type="text"
       />
       <label>Content:</label>
       <textarea
+        placeholder="..."
         value={content}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={(e) => {
+          setContent(e.target.value);
+          setIsInvalid(false);
+        }}
         className="note-form__content"
       />
       <label>Color:</label>
@@ -105,10 +111,18 @@ const NoteForm: React.FC<NoteFormProps> = ({ onCancel, onAddNote }) => {
         //@ts-ignore
         options={colors}
         styles={colorStyles}
-        //@ts-ignore
-        onChange={setColor}
+        onChange={(selected) => {
+          //@ts-ignore
+          setColor(selected);
+          setIsInvalid(false);
+        }}
         className="note-form__select"
       />
+      {isInvalid && (
+        <p style={{ paddingTop: ".7rem", color: "#d11b1b" }}>
+          You must provide title, content and color to add note.
+        </p>
+      )}
       <div className="note-form__actions">
         <Button onClick={() => onCancel(false)}>Cancel</Button>
         <Button type="submit">Add</Button>

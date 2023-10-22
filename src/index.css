@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -7,7 +7,7 @@
 }
 
 :root {
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-size: 62.5%;
@@ -24,20 +24,26 @@ body {
   display: grid;
   height: 100vh;
   grid-template-rows: auto 1fr auto;
-
 }
 
 .header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 5rem;
   padding: 2rem 2rem;
 }
 
-.header__title {
+.header__btn-title-container {
   display: flex;
   align-items: center;
-  gap: .5em;
+  gap: 5.5em;
+}
+
+.header__btn-title-container__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .header h2 {
@@ -53,41 +59,69 @@ body {
   font-size: 1.8rem;
 }
 
+.header__searchbar-container {
+  position: relative;
+}
+
+.header__searchbar-container__searchbar {
+  position: relative;
+  width: 40rem;
+  padding: 1.2rem;
+  margin: 0;
+  align-self: flex-end;
+  justify-self: end;
+  background-color: black;
+  color: #929292;
+  outline: none;
+}
+
+.header__searchbar-container__icon {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+}
+
 .button {
   font-size: 1.6rem;
-  padding: .8rem 1.6rem;
+  padding: 0.8rem 1.6rem;
   background-color: #f1c40f;
   cursor: pointer;
   border: none;
   font-weight: 600;
   text-align: center;
   box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.801);
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 }
 .button:active {
   transform: translate(2px, 2px);
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.801);
 }
 
-.note-list{
+.note-list {
+  position: relative;
   display: flex;
-  align-items: start;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 1rem;
   padding: 2rem;
   background-color: black;
   list-style: none;
   border-radius: 5px;
+  max-height: 90vh;
+  overflow: auto;
 }
 
 .note-item {
   position: relative;
-  width: 300px;
+  min-width: 15rem;
+  width: auto;
   height: auto;
-  padding: 1.2rem 1rem 2rem 1rem;
-  background-color: #f1c40f;
+  padding: 2.6rem 1rem 1rem 1rem;
   color: black;
   resize: both;
+  overflow: auto;
+  overflow-wrap: anywhere;
 }
 
 .note-item h3 {
@@ -96,7 +130,7 @@ body {
 
 .note-item p {
   font-size: 1.4rem;
-  padding-top: .5em;
+  padding-top: 0.5em;
 }
 
 .note-item__delete {
@@ -106,35 +140,66 @@ body {
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 3.2rem;
+  font-size: 3rem;
   color: #242424;
-  padding: 0 0.8rem;
-  transform: translateY(2px);
+  padding: 0.2rem 0.3rem;
+  line-height: 22px;
+}
+
+.note-item__move-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.2rem;
+}
+
+.note-item::-webkit-scrollbar {
+  width: 4px;
+}
+
+.note-item::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+.note-item::-webkit-scrollbar-thumb {
+  background: #00000071;
+  border-radius: 20px;
+}
+.note-item::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.note-item::-webkit-scrollbar-corner {
+  display: none;
 }
 
 .note-form {
+  position: absolute;
   display: flex;
   flex-direction: column;
+  max-width: 29rem;
   padding: 2rem;
   font-size: 1.6rem;
   color: white;
   background-color: #242424;
+  z-index: 1;
 }
 
 label {
   font-weight: 500;
 }
 
-select, input, textarea {
+select,
+input,
+textarea {
   background-color: white;
   color: #242424;
   font-family: inherit;
   border: none;
   border-radius: 5px;
-  padding: .5rem 1.2rem;
+  padding: 0.5rem 1.2rem;
   font-weight: 700;
   font-size: 1.6rem;
-  margin-bottom: .8rem;
+  margin-bottom: 0.8rem;
 }
 
 .note-form__select {
@@ -143,12 +208,12 @@ select, input, textarea {
   border: none;
 }
 
-.note-form__select div{
+.note-form__select div {
   cursor: pointer;
 }
 
 .note-form input {
-  font-size: 1.4rem;  
+  font-size: 1.4rem;
 }
 
 .note-form__content {
@@ -169,4 +234,23 @@ select, input, textarea {
   align-items: center;
   font-size: 1.8rem;
   padding: 1.4rem 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cac4c471;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a7a7a7;
+}
+::-webkit-scrollbar-corner {
+  display: none;
 }
