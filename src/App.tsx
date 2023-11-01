@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import NoteList from "./components/NoteList";
 import { useEffect, useState } from "react";
 import { NoteItem } from "./components/NoteList";
+import NoteForm from "./components/NoteForm";
 
 function App() {
   const [notes, setNotes] = useState<Array<NoteItem>>([]);
@@ -46,10 +47,11 @@ function App() {
         onSearchNote={searchNoteHandler}
         setIsFormVisible={setIsFormVisible}
       />
+      {isFormVisible && (
+        <NoteForm onAddNote={addNoteHandler} onCancel={setIsFormVisible} />
+      )}
       <NoteList
-        onAddNote={addNoteHandler}
         onDeleteNote={deleteNoteHandler}
-        onCancel={setIsFormVisible}
         isFormVisible={isFormVisible}
         notes={searchedValue.trim() === "" ? notes : searchedNotes}
       />
